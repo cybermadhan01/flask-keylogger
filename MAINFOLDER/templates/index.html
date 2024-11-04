@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keylogger Dashboard</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Keylogger Dashboard</h1>
+        <p>Your keystrokes are being logged:</p>
+        <textarea id="output" placeholder="Logged keys will appear here..." readonly></textarea>
+        <div class="footer">
+            <p>&copy; 2024 Keylogger Application</p>
+        </div>
+    </div>
+    <script>
+        const outputArea = document.getElementById('output');
+
+        // Function to update the output area with logged keys from the server
+        function updateOutput() {
+            fetch('/get-keys')  // Adjust the endpoint to fetch logged keys
+                .then(response => response.text())
+                .then(data => {
+                    outputArea.value = data; // Display logged keys
+                })
+                .catch(err => console.error(err));
+        }
+
+        // Poll for updates every second
+        setInterval(updateOutput, 1000);
+    </script>
+</body>
+</html>
